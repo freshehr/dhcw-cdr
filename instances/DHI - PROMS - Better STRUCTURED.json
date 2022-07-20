@@ -1,0 +1,192 @@
+{
+    "prostate_cancer_proms_report": {
+        "_uid": [
+            "b48780f0-56bb-471a-9b41-9c7077fa6415::a81f47c6-a757-4e34-b644-3ccc62b4a01c::1"
+        ],
+        "language": [
+            {
+                "|code": "en",
+                "|terminology": "ISO_639-1"
+            }
+        ],
+        "territory": [
+            {
+                "|code": "EN",
+                "|terminology": "ISO_3166-1"
+            }
+        ],
+        "context": [
+            {
+                "xds_metadata": [
+                    {
+                        "document_type": [
+                            "Patient recorded outcome measures"
+                        ]
+                    }
+                ],
+                "start_time": [
+                    "2020-07-05T13:32:56.186Z"
+                ],
+                "setting": [
+                    {
+                        "|code": "238",
+                        "|value": "other care",
+                        "|terminology": "openehr"
+                    }
+                ]
+            }
+        ],
+        "what_matters_to_me": [
+            {
+             "what_matters_to_me": [
+              "Parents",
+              "Mood",
+              "Isolation",
+              "Eating",
+              "Family",
+              "Safety"
+             ]
+            }
+        ],
+        "howru_score": [
+            {
+                "pain_or_discomfort": [
+                    {
+                        "|code": "at0040",
+                        "|value": "none",
+                        "|ordinal": 0
+                    }
+                ],
+                "feeling_low_or_worried": [
+                    {
+                        "|code": "at0041",
+                        "|value": "slight",
+                        "|ordinal": 1
+                    }
+                ],
+                "limited_in_what_i_can_do": [
+                    {
+                        "|code": "at0041",
+                        "|value": "slight",
+                        "|ordinal": 1
+                    }
+                ],
+                "dependent_on_others": [
+                    {
+                        "|code": "at0043",
+                        "|value": "extreme",
+                        "|ordinal": 3
+                    }
+                ],
+                "summary_score": [
+                    6
+                ],
+                "time": [
+                    "2020-07-05T13:32:56.186Z"
+                ],
+                "language": [
+                    {
+                        "|code": "en",
+                        "|terminology": "ISO_639-1"
+                    }
+                ],
+                "encoding": [
+                    {
+                        "|code": "UTF-8",
+                        "|terminology": "IANA_character-sets"
+                    }
+                ]
+            }
+        ],
+        "i-pss_prostate_score": [
+            {
+                "a1._incomplete_emptying": [
+                    {
+                        "|code": "at0015",
+                        "|value": "Less Than 1 Time In 5",
+                        "|ordinal": 1
+                    }
+                ],
+                "a2._frequency": [
+                    {
+                        "|code": "at0016",
+                        "|value": "Less Than Half The Time",
+                        "|ordinal": 2
+                    }
+                ],
+                "a3._intermittency": [
+                    {
+                        "|code": "at0017",
+                        "|value": "About Half The Time",
+                        "|ordinal": 3
+                    }
+                ],
+                "a4._urgency": [
+                    {
+                        "|code": "at0017",
+                        "|value": "About Half The Time",
+                        "|ordinal": 3
+                    }
+                ],
+                "a5._weak_stream": [
+                    {
+                        "|code": "at0016",
+                        "|value": "Less Than Half The Time",
+                        "|ordinal": 2
+                    }
+                ],
+                "a6._straining": [
+                    {
+                        "|code": "at0018",
+                        "|value": "More Than Half The Time",
+                        "|ordinal": 4
+                    }
+                ],
+                "a7._nocturia": [
+                    {
+                        "|code": "at0060",
+                        "|value": "3 times",
+                        "|ordinal": 3
+                    }
+                ],
+                "total_i-pss_score": [
+                    18
+                ],
+                "i-pss_score_grade": [
+                    {
+                        "|code": "at0087",
+                        "|value": "8-19 Moderate",
+                        "|terminology": "local"
+                    }
+                ],
+                "time": [
+                    "2020-07-05T13:32:56.186Z"
+                ],
+                "language": [
+                    {
+                        "|code": "en",
+                        "|terminology": "ISO_639-1"
+                    }
+                ],
+                "encoding": [
+                    {
+                        "|code": "UTF-8",
+                        "|terminology": "IANA_character-sets"
+                    }
+                ]
+            }
+        ],
+        "category": [
+            {
+                "|code": "433",
+                "|value": "event",
+                "|terminology": "openehr"
+            }
+        ],
+        "composer": [
+            {
+                "|name": "John Smith"
+            }
+        ]
+    }
+}

@@ -1,0 +1,579 @@
+{
+    "_type": "COMPOSITION",
+    "name": {
+        "_type": "DV_TEXT",
+        "value": "Prostate cancer PROMS report"
+    },
+    "uid": {
+        "_type": "OBJECT_VERSION_ID",
+        "value": "b48780f0-56bb-471a-9b41-9c7077fa6415::a81f47c6-a757-4e34-b644-3ccc62b4a01c::1"
+    },
+    "archetype_details": {
+        "_type": "ARCHETYPED",
+        "archetype_id": {
+            "_type": "ARCHETYPE_ID",
+            "value": "openEHR-EHR-COMPOSITION.report.v1"
+        },
+        "template_id": {
+            "_type": "TEMPLATE_ID",
+            "value": "DHI - Urology_PROMs-v0"
+        },
+        "rm_version": "1.0.4"
+    },
+    "feeder_audit": {
+        "_type": "FEEDER_AUDIT",
+        "original_content": {
+            "_type": "DV_PARSABLE",
+            "value": "{}",
+            "formalism": "application/json"
+        },
+        "originating_system_audit": {
+            "_type": "FEEDER_AUDIT_DETAILS",
+            "system_id": "FormRenderer"
+        }
+    },
+    "archetype_node_id": "openEHR-EHR-COMPOSITION.report.v1",
+    "language": {
+        "_type": "CODE_PHRASE",
+        "terminology_id": {
+            "_type": "TERMINOLOGY_ID",
+            "value": "ISO_639-1"
+        },
+        "code_string": "en"
+    },
+    "territory": {
+        "_type": "CODE_PHRASE",
+        "terminology_id": {
+            "_type": "TERMINOLOGY_ID",
+            "value": "ISO_3166-1"
+        },
+        "code_string": "EN"
+    },
+    "category": {
+        "_type": "DV_CODED_TEXT",
+        "value": "event",
+        "defining_code": {
+            "_type": "CODE_PHRASE",
+            "terminology_id": {
+                "_type": "TERMINOLOGY_ID",
+                "value": "openehr"
+            },
+            "code_string": "433"
+        }
+    },
+    "composer": {
+        "_type": "PARTY_IDENTIFIED",
+        "name": "a81f47c6-a757-4e34-b644-3ccc62b4a01c"
+    },
+    "context": {
+        "_type": "EVENT_CONTEXT",
+        "start_time": {
+            "_type": "DV_DATE_TIME",
+            "value": "2020-07-05T13:32:56.186Z"
+        },
+        "setting": {
+            "_type": "DV_CODED_TEXT",
+            "value": "other care",
+            "defining_code": {
+                "_type": "CODE_PHRASE",
+                "terminology_id": {
+                    "_type": "TERMINOLOGY_ID",
+                    "value": "openehr"
+                },
+                "code_string": "238"
+            }
+        },
+        "other_context": {
+            "_type": "ITEM_TREE",
+            "name": {
+                "_type": "DV_TEXT",
+                "value": "Tree"
+            },
+            "archetype_node_id": "at0001",
+            "items": [
+                {
+                    "_type": "CLUSTER",
+                    "name": {
+                        "_type": "DV_TEXT",
+                        "value": "XDS Metadata"
+                    },
+                    "archetype_details": {
+                        "_type": "ARCHETYPED",
+                        "archetype_id": {
+                            "_type": "ARCHETYPE_ID",
+                            "value": "openEHR-EHR-CLUSTER.xds_metadata.v0"
+                        },
+                        "rm_version": "1.0.4"
+                    },
+                    "archetype_node_id": "openEHR-EHR-CLUSTER.xds_metadata.v0",
+                    "items": [
+                        {
+                            "_type": "ELEMENT",
+                            "name": {
+                                "_type": "DV_TEXT",
+                                "value": "Document type"
+                            },
+                            "archetype_node_id": "at0003",
+                            "value": {
+                                "_type": "DV_TEXT",
+                                "value": "Patient recorded outcome measures"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "content": [
+        {
+            "_type": "OBSERVATION",
+            "name": {
+                "_type": "DV_TEXT",
+                "value": "howRU score"
+            },
+            "archetype_details": {
+                "_type": "ARCHETYPED",
+                "archetype_id": {
+                    "_type": "ARCHETYPE_ID",
+                    "value": "openEHR-EHR-OBSERVATION.howru.v1"
+                },
+                "rm_version": "1.0.4"
+            },
+            "archetype_node_id": "openEHR-EHR-OBSERVATION.howru.v1",
+            "language": {
+                "_type": "CODE_PHRASE",
+                "terminology_id": {
+                    "_type": "TERMINOLOGY_ID",
+                    "value": "ISO_639-1"
+                },
+                "code_string": "en"
+            },
+            "encoding": {
+                "_type": "CODE_PHRASE",
+                "terminology_id": {
+                    "_type": "TERMINOLOGY_ID",
+                    "value": "IANA_character-sets"
+                },
+                "code_string": "UTF-8"
+            },
+            "subject": {
+                "_type": "PARTY_SELF"
+            },
+            "data": {
+                "_type": "HISTORY",
+                "name": {
+                    "_type": "DV_TEXT",
+                    "value": "Event Series"
+                },
+                "archetype_node_id": "at0001",
+                "origin": {
+                    "_type": "DV_DATE_TIME",
+                    "value": "2020-07-05T13:32:56.186Z"
+                },
+                "events": [
+                    {
+                        "_type": "POINT_EVENT",
+                        "name": {
+                            "_type": "DV_TEXT",
+                            "value": "Recording event"
+                        },
+                        "archetype_node_id": "at0002",
+                        "time": {
+                            "_type": "DV_DATE_TIME",
+                            "value": "2020-07-05T13:32:56.186Z"
+                        },
+                        "data": {
+                            "_type": "ITEM_TREE",
+                            "name": {
+                                "_type": "DV_TEXT",
+                                "value": "List"
+                            },
+                            "archetype_node_id": "at0003",
+                            "items": [
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "Pain or discomfort"
+                                    },
+                                    "archetype_node_id": "at0044",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 0,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "none",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0040"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "Feeling low or worried"
+                                    },
+                                    "archetype_node_id": "at0008",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 1,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "slight",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0041"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "Limited in what I can do"
+                                    },
+                                    "archetype_node_id": "at0039",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 1,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "slight",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0041"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "Dependent on others"
+                                    },
+                                    "archetype_node_id": "at0006",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 3,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "extreme",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0043"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "Summary score"
+                                    },
+                                    "archetype_node_id": "at0004",
+                                    "value": {
+                                        "_type": "DV_COUNT",
+                                        "magnitude": 6
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "_type": "OBSERVATION",
+            "name": {
+                "_type": "DV_TEXT",
+                "value": "I-PSS Prostate Score"
+            },
+            "archetype_details": {
+                "_type": "ARCHETYPED",
+                "archetype_id": {
+                    "_type": "ARCHETYPE_ID",
+                    "value": "openEHR-EHR-OBSERVATION.i_pss_prostate_score.v0"
+                },
+                "rm_version": "1.0.4"
+            },
+            "archetype_node_id": "openEHR-EHR-OBSERVATION.i_pss_prostate_score.v0",
+            "language": {
+                "_type": "CODE_PHRASE",
+                "terminology_id": {
+                    "_type": "TERMINOLOGY_ID",
+                    "value": "ISO_639-1"
+                },
+                "code_string": "en"
+            },
+            "encoding": {
+                "_type": "CODE_PHRASE",
+                "terminology_id": {
+                    "_type": "TERMINOLOGY_ID",
+                    "value": "IANA_character-sets"
+                },
+                "code_string": "UTF-8"
+            },
+            "subject": {
+                "_type": "PARTY_SELF"
+            },
+            "data": {
+                "_type": "HISTORY",
+                "name": {
+                    "_type": "DV_TEXT",
+                    "value": "Event Series"
+                },
+                "archetype_node_id": "at0001",
+                "origin": {
+                    "_type": "DV_DATE_TIME",
+                    "value": "2020-07-05T13:32:56.186Z"
+                },
+                "events": [
+                    {
+                        "_type": "POINT_EVENT",
+                        "name": {
+                            "_type": "DV_TEXT",
+                            "value": "Any event"
+                        },
+                        "archetype_node_id": "at0002",
+                        "time": {
+                            "_type": "DV_DATE_TIME",
+                            "value": "2020-07-05T13:32:56.186Z"
+                        },
+                        "data": {
+                            "_type": "ITEM_TREE",
+                            "name": {
+                                "_type": "DV_TEXT",
+                                "value": "Tree"
+                            },
+                            "archetype_node_id": "at0003",
+                            "items": [
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "1. Incomplete emptying"
+                                    },
+                                    "archetype_node_id": "at0013",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 1,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "Less Than 1 Time In 5",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0015"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "2. Frequency"
+                                    },
+                                    "archetype_node_id": "at0020",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 2,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "Less Than Half The Time",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0016"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "3. Intermittency"
+                                    },
+                                    "archetype_node_id": "at0028",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 3,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "About Half The Time",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0017"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "4. Urgency"
+                                    },
+                                    "archetype_node_id": "at0035",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 3,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "About Half The Time",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0017"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "5. Weak Stream"
+                                    },
+                                    "archetype_node_id": "at0042",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 2,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "Less Than Half The Time",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0016"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "6. Straining"
+                                    },
+                                    "archetype_node_id": "at0049",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 4,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "More Than Half The Time",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0018"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "7. Nocturia"
+                                    },
+                                    "archetype_node_id": "at0056",
+                                    "value": {
+                                        "_type": "DV_ORDINAL",
+                                        "value": 3,
+                                        "symbol": {
+                                            "_type": "DV_CODED_TEXT",
+                                            "value": "3 times",
+                                            "defining_code": {
+                                                "_type": "CODE_PHRASE",
+                                                "terminology_id": {
+                                                    "_type": "TERMINOLOGY_ID",
+                                                    "value": "local"
+                                                },
+                                                "code_string": "at0060"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "Total I-PSS score"
+                                    },
+                                    "archetype_node_id": "at0063",
+                                    "value": {
+                                        "_type": "DV_COUNT",
+                                        "magnitude": 18
+                                    }
+                                },
+                                {
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                        "_type": "DV_TEXT",
+                                        "value": "I-PSS Score Grade"
+                                    },
+                                    "archetype_node_id": "at0076",
+                                    "value": {
+                                        "_type": "DV_CODED_TEXT",
+                                        "value": "8-19 Moderate",
+                                        "defining_code": {
+                                            "_type": "CODE_PHRASE",
+                                            "terminology_id": {
+                                                "_type": "TERMINOLOGY_ID",
+                                                "value": "local"
+                                            },
+                                            "code_string": "at0087"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

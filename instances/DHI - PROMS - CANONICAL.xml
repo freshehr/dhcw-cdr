@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<composition xmlns="http://schemas.openehr.org/v1" archetype_node_id="openEHR-EHR-COMPOSITION.report.v1">
+    <name>
+        <value>Prostate cancer PROMS report</value>
+    </name>
+    <uid xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="OBJECT_VERSION_ID">
+        <value>b48780f0-56bb-471a-9b41-9c7077fa6415::a81f47c6-a757-4e34-b644-3ccc62b4a01c::1</value>
+    </uid>
+    <archetype_details>
+        <archetype_id>
+            <value>openEHR-EHR-COMPOSITION.report.v1</value>
+        </archetype_id>
+        <template_id>
+            <value>DHI - Urology_PROMs-v0</value>
+        </template_id>
+        <rm_version>1.0.4</rm_version>
+    </archetype_details>
+    <feeder_audit>
+        <original_content xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="DV_PARSABLE">
+            <value>{}</value>
+            <formalism>application/json</formalism>
+        </original_content>
+        <originating_system_audit>
+            <system_id>FormRenderer</system_id>
+        </originating_system_audit>
+    </feeder_audit>
+    <language>
+        <terminology_id>
+            <value>ISO_639-1</value>
+        </terminology_id>
+        <code_string>en</code_string>
+    </language>
+    <territory>
+        <terminology_id>
+            <value>ISO_3166-1</value>
+        </terminology_id>
+        <code_string>EN</code_string>
+    </territory>
+    <category>
+        <value>event</value>
+        <defining_code>
+            <terminology_id>
+                <value>openehr</value>
+            </terminology_id>
+            <code_string>433</code_string>
+        </defining_code>
+    </category>
+    <composer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="PARTY_IDENTIFIED">
+        <name>a81f47c6-a757-4e34-b644-3ccc62b4a01c</name>
+    </composer>
+    <context>
+        <start_time>
+            <value>2020-07-05T13:32:56.186Z</value>
+        </start_time>
+        <setting>
+            <value>other care</value>
+            <defining_code>
+                <terminology_id>
+                    <value>openehr</value>
+                </terminology_id>
+                <code_string>238</code_string>
+            </defining_code>
+        </setting>
+        <other_context xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ITEM_TREE" archetype_node_id="at0001">
+            <name>
+                <value>Tree</value>
+            </name>
+            <items xsi:type="CLUSTER" archetype_node_id="openEHR-EHR-CLUSTER.xds_metadata.v0">
+                <name>
+                    <value>XDS Metadata</value>
+                </name>
+                <archetype_details>
+                    <archetype_id>
+                        <value>openEHR-EHR-CLUSTER.xds_metadata.v0</value>
+                    </archetype_id>
+                    <rm_version>1.0.4</rm_version>
+                </archetype_details>
+                <items xsi:type="ELEMENT" archetype_node_id="at0003">
+                    <name>
+                        <value>Document type</value>
+                    </name>
+                    <value xsi:type="DV_TEXT">
+                        <value>Patient recorded outcome measures</value>
+                    </value>
+                </items>
+            </items>
+        </other_context>
+    </context>
+    <content xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="OBSERVATION" archetype_node_id="openEHR-EHR-OBSERVATION.howru.v1">
+        <name>
+            <value>howRU score</value>
+        </name>
+        <archetype_details>
+            <archetype_id>
+                <value>openEHR-EHR-OBSERVATION.howru.v1</value>
+            </archetype_id>
+            <rm_version>1.0.4</rm_version>
+        </archetype_details>
+        <language>
+            <terminology_id>
+                <value>ISO_639-1</value>
+            </terminology_id>
+            <code_string>en</code_string>
+        </language>
+        <encoding>
+            <terminology_id>
+                <value>IANA_character-sets</value>
+            </terminology_id>
+            <code_string>UTF-8</code_string>
+        </encoding>
+        <subject xsi:type="PARTY_SELF"/>
+        <data archetype_node_id="at0001">
+            <name>
+                <value>Event Series</value>
+            </name>
+            <origin>
+                <value>2020-07-05T13:32:56.186Z</value>
+            </origin>
+            <events xsi:type="POINT_EVENT" archetype_node_id="at0002">
+                <name>
+                    <value>Recording event</value>
+                </name>
+                <time>
+                    <value>2020-07-05T13:32:56.186Z</value>
+                </time>
+                <data xsi:type="ITEM_TREE" archetype_node_id="at0003">
+                    <name>
+                        <value>List</value>
+                    </name>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0044">
+                        <name>
+                            <value>Pain or discomfort</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>0</value>
+                            <symbol>
+                                <value>none</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0040</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0008">
+                        <name>
+                            <value>Feeling low or worried</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>1</value>
+                            <symbol>
+                                <value>slight</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0041</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0039">
+                        <name>
+                            <value>Limited in what I can do</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>1</value>
+                            <symbol>
+                                <value>slight</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0041</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0006">
+                        <name>
+                            <value>Dependent on others</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>3</value>
+                            <symbol>
+                                <value>extreme</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0043</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0004">
+                        <name>
+                            <value>Summary score</value>
+                        </name>
+                        <value xsi:type="DV_COUNT">
+                            <magnitude>6</magnitude>
+                        </value>
+                    </items>
+                </data>
+            </events>
+        </data>
+    </content>
+    <content xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="OBSERVATION" archetype_node_id="openEHR-EHR-OBSERVATION.i_pss_prostate_score.v0">
+        <name>
+            <value>I-PSS Prostate Score</value>
+        </name>
+        <archetype_details>
+            <archetype_id>
+                <value>openEHR-EHR-OBSERVATION.i_pss_prostate_score.v0</value>
+            </archetype_id>
+            <rm_version>1.0.4</rm_version>
+        </archetype_details>
+        <language>
+            <terminology_id>
+                <value>ISO_639-1</value>
+            </terminology_id>
+            <code_string>en</code_string>
+        </language>
+        <encoding>
+            <terminology_id>
+                <value>IANA_character-sets</value>
+            </terminology_id>
+            <code_string>UTF-8</code_string>
+        </encoding>
+        <subject xsi:type="PARTY_SELF"/>
+        <data archetype_node_id="at0001">
+            <name>
+                <value>Event Series</value>
+            </name>
+            <origin>
+                <value>2020-07-05T13:32:56.186Z</value>
+            </origin>
+            <events xsi:type="POINT_EVENT" archetype_node_id="at0002">
+                <name>
+                    <value>Any event</value>
+                </name>
+                <time>
+                    <value>2020-07-05T13:32:56.186Z</value>
+                </time>
+                <data xsi:type="ITEM_TREE" archetype_node_id="at0003">
+                    <name>
+                        <value>Tree</value>
+                    </name>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0013">
+                        <name>
+                            <value>1. Incomplete emptying</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>1</value>
+                            <symbol>
+                                <value>Less Than 1 Time In 5</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0015</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0020">
+                        <name>
+                            <value>2. Frequency</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>2</value>
+                            <symbol>
+                                <value>Less Than Half The Time</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0016</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0028">
+                        <name>
+                            <value>3. Intermittency</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>3</value>
+                            <symbol>
+                                <value>About Half The Time</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0017</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0035">
+                        <name>
+                            <value>4. Urgency</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>3</value>
+                            <symbol>
+                                <value>About Half The Time</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0017</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0042">
+                        <name>
+                            <value>5. Weak Stream</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>2</value>
+                            <symbol>
+                                <value>Less Than Half The Time</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0016</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0049">
+                        <name>
+                            <value>6. Straining</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>4</value>
+                            <symbol>
+                                <value>More Than Half The Time</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0018</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0056">
+                        <name>
+                            <value>7. Nocturia</value>
+                        </name>
+                        <value xsi:type="DV_ORDINAL">
+                            <value>3</value>
+                            <symbol>
+                                <value>3 times</value>
+                                <defining_code>
+                                    <terminology_id>
+                                        <value>local</value>
+                                    </terminology_id>
+                                    <code_string>at0060</code_string>
+                                </defining_code>
+                            </symbol>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0063">
+                        <name>
+                            <value>Total I-PSS score</value>
+                        </name>
+                        <value xsi:type="DV_COUNT">
+                            <magnitude>18</magnitude>
+                        </value>
+                    </items>
+                    <items xsi:type="ELEMENT" archetype_node_id="at0076">
+                        <name>
+                            <value>I-PSS Score Grade</value>
+                        </name>
+                        <value xsi:type="DV_CODED_TEXT">
+                            <value>8-19 Moderate</value>
+                            <defining_code>
+                                <terminology_id>
+                                    <value>local</value>
+                                </terminology_id>
+                                <code_string>at0087</code_string>
+                            </defining_code>
+                        </value>
+                    </items>
+                </data>
+            </events>
+        </data>
+    </content>
+</composition>
