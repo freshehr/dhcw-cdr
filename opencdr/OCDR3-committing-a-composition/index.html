@@ -1,0 +1,913 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../images/NWISWalesNHSUK2.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>Committing Observation data - openEHR CDR API for client-side developers (DHCW)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="teal">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#committing-observation-data" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="openEHR CDR API for client-side developers (DHCW)" class="md-header__button md-logo" aria-label="openEHR CDR API for client-side developers (DHCW)" data-md-component="logo">
+      
+  <img src="../../images/NWISWalesNHSUK2.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            openEHR CDR API for client-side developers (DHCW)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Committing Observation data
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="openEHR CDR API for client-side developers (DHCW)" class="md-nav__button md-logo" aria-label="openEHR CDR API for client-side developers (DHCW)" data-md-component="logo">
+      
+  <img src="../../images/NWISWalesNHSUK2.png" alt="logo">
+
+    </a>
+    openEHR CDR API for client-side developers (DHCW)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Introduction to openEHR
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Introduction to openEHR" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction to openEHR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT1-overview-openehr/" class="md-nav__link">
+        Overview of openEHR
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT2-overview-rest-apis/" class="md-nav__link">
+        Overview of openEHR REST APIs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT3-archetypes-template/" class="md-nav__link">
+        openEHR archetypes and templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT4-reference-model/" class="md-nav__link">
+        openEHR Reference Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM1-postman-getting-ready/" class="md-nav__link">
+        Getting ready with Postman
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM2-navigate-postman/" class="md-nav__link">
+        Navigate Postman
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM3-using-postman/" class="md-nav__link">
+        Using Postman with Ehrscape
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Jamaica Passport project
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Jamaica Passport project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Jamaica Passport project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS1-passport-project-overview/" class="md-nav__link">
+        Overview of the Passport-JDP project
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS2-retrieving-an-ehrid/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS3-querying-allergies/" class="md-nav__link">
+        Querying for patient allergies
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS7-querying-compositions/" class="md-nav__link">
+        Querying for recent compositions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS9-committing-observation-data/" class="md-nav__link">
+        Committing Observation data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS10-retrieving-observation-data/" class="md-nav__link">
+        Retrieving a Patient Observations Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS11-updating-observation-data/" class="md-nav__link">
+        Updating Patient Observations data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS12-composition-constraints/" class="md-nav__link">
+        Understanding composition Constraints and validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS13-openehr-datatypes/" class="md-nav__link">
+        openEHR Datatypes
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS14-openehr-rm-attributes/" class="md-nav__link">
+        Key openEHR RM attributes
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        openCDR API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="openCDR API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          openCDR API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OCDR1-authentication/" class="md-nav__link">
+        Getting started - Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OCDR2-openehr-templates/" class="md-nav__link">
+        Working with openEHR Templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Committing Observation data
+      </a>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OCDR4-retrieving-a-composition/" class="md-nav__link">
+        Retrieving an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OCDR5-creating-an-ehr/" class="md-nav__link">
+        Creating a new patient 'EHR'
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OCDR6-retrieving-an-ehrid/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Better Ehrscape API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Better Ehrscape API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Better Ehrscape API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR1-authentication/" class="md-nav__link">
+        Getting started - Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR2-openehr-templates/" class="md-nav__link">
+        Working with openEHR Templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR3-committing-a-composition/" class="md-nav__link">
+        Committing openEHR data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR4-retrieving-a-composition/" class="md-nav__link">
+        Retrieving an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR5-retrieving-an-ehrId/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR6-updating-a-composition/" class="md-nav__link">
+        Updating an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="committing-observation-data">Committing Observation data</h1>
+<p>All data committed to an openEHR CDR is done so via a POST /composition call - as a JSON or XML 'blob'. </p>
+<p>As it is committed, the data will be validated against both the appropriate openEHR template and the underlying Reference model schema.</p>
+<p>If the data is valid, it will be stored in the CDR and is allocated a unique ID, which is returned by the POST /composition call</p>
+<p>This section will submit an example Composition to the CDR by running a <code>POST / composition</code> call.</p>
+<p>A number of data serialisation options, can be used. In this case we will use the Better <code>STRUCTURED JSON</code> format, as it is somewhat easier to use than the current openEHR <code>CANONICAL JSON or XML</code> formats.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p>Note that this example uses the Better <code>Better Ehrscape API</code> which has a slightly different base URL and parameters than the <code>openEHR REST API</code>,though the data is stored identically and can be accessed from both end points.</p>
+<h4>Ehrscape POST /composition example</h4>
+<h5>Parameters</h5>
+<p><code>ehrId</code>: </p>
+<p>This is is the internal CDR identifier for a specific patient. When a patient is registered with the CDR,an EHR object is created with a unique <code>ehr_id</code> identifier, and is associated with an external <code>subjectId</code> and subjectNamespace e.g an NHS Number, CHI number, or a local hospital number.</p>
+<p>We will find out how to work out the correct ehrId for a patient in the next section.</p>
+<p>Generally when you first open a patient record session, you will retrieve their <code>ehrId</code> via their <code>subjectID</code> and <code>subjectNamespace</code>. We will explain how to do that in the next section.</p>
+<p>For testing purposes, you should use a known <code>ehrId</code>. If you have a Postman environment file, an example will be in there, otherwise you can find out how to identify valid ehrIds <a href="">here</a></p>
+<p><code>templateId</code>: </p>
+<p>This is the identifier of the openEHR template, against which you need to validate the composition. Use <code>DHI - Urology_PROMs-v0</code> for this example.  </p>
+<p><code>format</code>: </p>
+<p>This defines the format of JSON or XML that you are sending. Use <code>FLAT</code> for this example.</p>
+<h2>A. Commit an openEHR Composition (<code>FLAT JSON</code>)</h2>
+<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">cURL</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code>    curl 
+    --location 
+    --request POST <span class="s1">&#39;/composition?ehrId=&amp;templateId=&amp;format=STRUCTURED&#39;</span> <span class="se">\</span>
+    --header <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+    --header <span class="s1">&#39;Authorization: &#39;</span> <span class="se">\</span>
+    --data-raw <span class="s1">&#39;{</span>
+<span class="s1">    &quot;{</span>
+<span class="s1">      &quot;passport_observations/context/start_time&quot;: &quot;2020-10-18T16:16:21.449Z&quot;,</span>
+<span class="s1">      &quot;passport_observations/context/setting|code&quot;: &quot;238&quot;,</span>
+<span class="s1">      &quot;passport_observations/context/setting|value&quot;: &quot;other care&quot;,</span>
+<span class="s1">      &quot;passport_observations/context/setting|terminology&quot;: &quot;openehr&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_pressure/systolic|magnitude&quot;: 169.0,</span>
+<span class="s1">      &quot;passport_observations/blood_pressure/systolic|unit&quot;: &quot;mm[Hg]&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_pressure/diastolic|magnitude&quot;: 692.0,</span>
+<span class="s1">      &quot;passport_observations/blood_pressure/diastolic|unit&quot;: &quot;mm[Hg]&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_pressure/time&quot;: &quot;2020-10-18T16:16:21.452Z&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_pressure/language|code&quot;: &quot;en&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_pressure/language|terminology&quot;: &quot;ISO_639-1&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_pressure/encoding|code&quot;: &quot;UTF-8&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_pressure/encoding|terminology&quot;: &quot;IANA_character-sets&quot;,</span>
+<span class="s1">      &quot;passport_observations/height_length/height_length|magnitude&quot;: 609.33,</span>
+<span class="s1">      &quot;passport_observations/height_length/height_length|unit&quot;: &quot;cm&quot;,</span>
+<span class="s1">      &quot;passport_observations/height_length/time&quot;: &quot;2020-10-18T16:16:21.453Z&quot;,</span>
+<span class="s1">      &quot;passport_observations/height_length/language|code&quot;: &quot;en&quot;,</span>
+<span class="s1">      &quot;passport_observations/height_length/language|terminology&quot;: &quot;ISO_639-1&quot;,</span>
+<span class="s1">      &quot;passport_observations/height_length/encoding|code&quot;: &quot;UTF-8&quot;,</span>
+<span class="s1">      &quot;passport_observations/height_length/encoding|terminology&quot;: &quot;IANA_character-sets&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_weight/weight|magnitude&quot;: 380.49,</span>
+<span class="s1">      &quot;passport_observations/body_weight/weight|unit&quot;: &quot;kg&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_weight/time&quot;: &quot;2020-10-18T16:16:21.453Z&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_weight/language|code&quot;: &quot;en&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_weight/language|terminology&quot;: &quot;ISO_639-1&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_weight/encoding|code&quot;: &quot;UTF-8&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_weight/encoding|terminology&quot;: &quot;IANA_character-sets&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/test_name|code&quot;: &quot;14743-9&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/test_name|value&quot;: &quot;Glucose [Moles/volume] in Capillary blood by Glucometer&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/test_name|terminology&quot;: &quot;LOINC&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/laboratory_analyte_result/analyte_name|code&quot;: &quot;14743-9&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/laboratory_analyte_result/analyte_name|value&quot;: &quot;Glucose [Moles/volume] in Capillary blood by Glucometer&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/laboratory_analyte_result/analyte_name|terminology&quot;: &quot;LOINC&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/laboratory_analyte_result/analyte_result|magnitude&quot;: 52.61,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/laboratory_analyte_result/analyte_result|unit&quot;: &quot;mmol/L&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/time&quot;: &quot;2020-10-18T16:16:21.453Z&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/language|code&quot;: &quot;en&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/language|terminology&quot;: &quot;ISO_639-1&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/encoding|code&quot;: &quot;UTF-8&quot;,</span>
+<span class="s1">      &quot;passport_observations/blood_glucose/encoding|terminology&quot;: &quot;IANA_character-sets&quot;,</span>
+<span class="s1">      &quot;passport_observations/pulse_oximetry/spo|numerator&quot;: 0.0,</span>
+<span class="s1">      &quot;passport_observations/pulse_oximetry/spo|denominator&quot;: 100.0,</span>
+<span class="s1">      &quot;passport_observations/pulse_oximetry/spo|type&quot;: 2,</span>
+<span class="s1">      &quot;passport_observations/pulse_oximetry/spo&quot;: 0.0,</span>
+<span class="s1">      &quot;passport_observations/pulse_oximetry/time&quot;: &quot;2020-10-18T16:16:21.455Z&quot;,</span>
+<span class="s1">      &quot;passport_observations/pulse_oximetry/language|code&quot;: &quot;en&quot;,</span>
+<span class="s1">      &quot;passport_observations/pulse_oximetry/language|terminology&quot;: &quot;ISO_639-1&quot;,</span>
+<span class="s1">      &quot;passport_observations/pulse_oximetry/encoding|code&quot;: &quot;UTF-8&quot;,</span>
+<span class="s1">      &quot;passport_observations/pulse_oximetry/encoding|terminology&quot;: &quot;IANA_character-sets&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_temperature/temperature|magnitude&quot;: 72.7,</span>
+<span class="s1">      &quot;passport_observations/body_temperature/temperature|unit&quot;: &quot;[degF]&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_temperature/time&quot;: &quot;2020-10-18T16:16:21.455Z&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_temperature/language|code&quot;: &quot;en&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_temperature/language|terminology&quot;: &quot;ISO_639-1&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_temperature/encoding|code&quot;: &quot;UTF-8&quot;,</span>
+<span class="s1">      &quot;passport_observations/body_temperature/encoding|terminology&quot;: &quot;IANA_character-sets&quot;,</span>
+<span class="s1">      &quot;passport_observations/clinical_synopsis/notes&quot;: &quot;Notes 9&quot;,</span>
+<span class="s1">      &quot;passport_observations/clinical_synopsis/language|code&quot;: &quot;en&quot;,</span>
+<span class="s1">      &quot;passport_observations/clinical_synopsis/language|terminology&quot;: &quot;ISO_639-1&quot;,</span>
+<span class="s1">      &quot;passport_observations/clinical_synopsis/encoding|code&quot;: &quot;UTF-8&quot;,</span>
+<span class="s1">      &quot;passport_observations/clinical_synopsis/encoding|terminology&quot;: &quot;IANA_character-sets&quot;,</span>
+<span class="s1">      &quot;passport_observations/category|code&quot;: &quot;433&quot;,</span>
+<span class="s1">      &quot;passport_observations/category|value&quot;: &quot;event&quot;,</span>
+<span class="s1">      &quot;passport_observations/category|terminology&quot;: &quot;openehr&quot;,</span>
+<span class="s1">      &quot;passport_observations/language|code&quot;: &quot;en&quot;,</span>
+<span class="s1">      &quot;passport_observations/language|terminology&quot;: &quot;ISO_639-1&quot;,</span>
+<span class="s1">      &quot;passport_observations/territory|code&quot;: &quot;JM&quot;,</span>
+<span class="s1">      &quot;passport_observations/territory|terminology&quot;: &quot;ISO_3166-1&quot;</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+
+<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">NodeJS + Axios</label><div class="tabbed-content"></div>
+</div>
+<p>```js</p>
+<div class="codehilite"><pre><span></span><code><span class="n">var</span> <span class="n">axios</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;axios&#39;</span><span class="p">);</span>
+
+<span class="n">var</span> <span class="k">data</span> <span class="o">=</span> <span class="n">JSON</span><span class="p">.</span><span class="n">stringify</span><span class="p">(</span><span class="err">{</span><span class="ss">&quot;prostate_cancer_proms_report&quot;</span><span class="p">:</span> <span class="o">//</span> <span class="n">trimmed</span> <span class="k">for</span> <span class="n">brevity</span><span class="err">}&quot;</span><span class="p">);</span>
+
+<span class="n">var</span> <span class="n">config</span> <span class="o">=</span> <span class="err">{</span>
+  <span class="k">method</span><span class="p">:</span> <span class="s1">&#39;post&#39;</span><span class="p">,</span>
+  <span class="n">url</span><span class="p">:</span> <span class="s1">&#39;/composition?ehrId=&amp;templateId=&amp;format=STRUCTURED&#39;</span><span class="p">,</span>
+  <span class="n">headers</span><span class="p">:</span> <span class="err">{</span> 
+    <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+  <span class="err">}</span><span class="p">,</span>
+  <span class="k">data</span> <span class="p">:</span> <span class="k">data</span>
+<span class="err">}</span><span class="p">;</span>
+
+<span class="n">axios</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="p">.</span><span class="k">then</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="err">{</span>
+  <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">JSON</span><span class="p">.</span><span class="n">stringify</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="k">data</span><span class="p">));</span>
+<span class="err">}</span><span class="p">)</span>
+<span class="p">.</span><span class="n">catch</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="err">{</span>
+  <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+<span class="err">}</span><span class="p">);</span>
+</code></pre></div>
+
+
+<p>```</p>
+<h3>Response for POST /composition</h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;meta&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://cdr.code4health.org/rest/v1/composition/59e8f5a2-6fb6-47d5-9acd-ae6309d0f1dd::a81f47c6-a757-4e34-b644-3ccc62b4a01c::1&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;CREATE&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;compositionUid&quot;</span><span class="p">:</span> <span class="s2">&quot;59e8f5a2-6fb6-47d5-9acd-ae6309d0f1dd::a81f47c6-a757-4e34-b644-3ccc62b4a01c::1&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h4>The <code>Composition Id</code></h4>
+<p>The compositionUid is the unique identifier allocated to (and held within) every composition by the CDR.</p>
+<p>You will see that it ends in <code>...::1</code>. The <code>1</code> is the version of this composition instance. If you need to update the instance (perhaps because of an error), you need to do so via a PUT / composition call and if successful the composition version number will clock up to <code>::2</code>.</p>
+<p>In essence every commit is versioned and retained for medico-legal reasons. </p>
+<p>Similarly when a composition is deleted, this is a logical delete and the composition can always be retrieved, though is not normally accessible via querying.</p>
+<p>We will go through the process of updating a composition later.</p>
+<p>For now let's just <a href="../OCDR4-retrieving-a-composition/">retrieve the composition</a> we just committed, via the GET /composition call.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../OCDR2-openehr-templates/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Working with openEHR Templates
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../OCDR4-retrieving-a-composition/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Retrieving an openEHR Composition
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+    
+  </body>
+</html>

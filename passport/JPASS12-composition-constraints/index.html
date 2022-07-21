@@ -1,0 +1,2045 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../images/NWISWalesNHSUK2.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>Understanding composition Constraints and validation - openEHR CDR API for client-side developers (DHCW)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="teal">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#understanding-composition-constraints-and-validation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="openEHR CDR API for client-side developers (DHCW)" class="md-header__button md-logo" aria-label="openEHR CDR API for client-side developers (DHCW)" data-md-component="logo">
+      
+  <img src="../../images/NWISWalesNHSUK2.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            openEHR CDR API for client-side developers (DHCW)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Understanding composition Constraints and validation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="openEHR CDR API for client-side developers (DHCW)" class="md-nav__button md-logo" aria-label="openEHR CDR API for client-side developers (DHCW)" data-md-component="logo">
+      
+  <img src="../../images/NWISWalesNHSUK2.png" alt="logo">
+
+    </a>
+    openEHR CDR API for client-side developers (DHCW)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Introduction to openEHR
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Introduction to openEHR" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction to openEHR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT1-overview-openehr/" class="md-nav__link">
+        Overview of openEHR
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT2-overview-rest-apis/" class="md-nav__link">
+        Overview of openEHR REST APIs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT3-archetypes-template/" class="md-nav__link">
+        openEHR archetypes and templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT4-reference-model/" class="md-nav__link">
+        openEHR Reference Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM1-postman-getting-ready/" class="md-nav__link">
+        Getting ready with Postman
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM2-navigate-postman/" class="md-nav__link">
+        Navigate Postman
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM3-using-postman/" class="md-nav__link">
+        Using Postman with Ehrscape
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Jamaica Passport project
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Jamaica Passport project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Jamaica Passport project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS1-passport-project-overview/" class="md-nav__link">
+        Overview of the Passport-JDP project
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS2-retrieving-an-ehrid/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS3-querying-allergies/" class="md-nav__link">
+        Querying for patient allergies
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS7-querying-compositions/" class="md-nav__link">
+        Querying for recent compositions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS9-committing-observation-data/" class="md-nav__link">
+        Committing Observation data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS10-retrieving-observation-data/" class="md-nav__link">
+        Retrieving a Patient Observations Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS11-updating-observation-data/" class="md-nav__link">
+        Updating Patient Observations data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Understanding composition Constraints and validation
+      </a>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS13-openehr-datatypes/" class="md-nav__link">
+        openEHR Datatypes
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS14-openehr-rm-attributes/" class="md-nav__link">
+        Key openEHR RM attributes
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        openCDR API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="openCDR API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          openCDR API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR1-authentication/" class="md-nav__link">
+        Getting started - Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR2-openehr-templates/" class="md-nav__link">
+        Working with openEHR Templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR3-committing-a-composition/" class="md-nav__link">
+        Committing Observation data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR4-retrieving-a-composition/" class="md-nav__link">
+        Retrieving an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR5-creating-an-ehr/" class="md-nav__link">
+        Creating a new patient 'EHR'
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR6-retrieving-an-ehrid/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Better Ehrscape API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Better Ehrscape API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Better Ehrscape API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR1-authentication/" class="md-nav__link">
+        Getting started - Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR2-openehr-templates/" class="md-nav__link">
+        Working with openEHR Templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR3-committing-a-composition/" class="md-nav__link">
+        Committing openEHR data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR4-retrieving-a-composition/" class="md-nav__link">
+        Retrieving an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR5-retrieving-an-ehrId/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR6-updating-a-composition/" class="md-nav__link">
+        Updating an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="understanding-composition-constraints-and-validation">Understanding composition Constraints and validation</h1>
+<p>As it is committed, the data will be validated against both the appropriate openEHR template and the underlying Reference Model schema.</p>
+<p>If the data is valid, it will be stored in the CDR and is allocated a unique <code>compositionID</code>, which is returned by the POST /composition call on a successful call.</p>
+<p>One of the key challenges in working with openEHR, is in understanding the complexities of the various datatypes and the other validation rules that apply for any particular template.</p>
+<p>The constraint and validation rules are applied in by</p>
+<ol>
+<li>
+<p>The Reference model</p>
+</li>
+<li>
+<p>Archetype-level constraints</p>
+</li>
+<li>
+<p>Template-level constraints</p>
+</li>
+</ol>
+<h3>How to figure out which constraints apply?</h3>
+<p>As an example, I know that a particular coded entry list (perhaps drop-down) allows only a fixed selection of possible answers, which are probably coded ( a good example being a PROMS score). Where can I find how these are defined?</p>
+<p>The ultimate source of truth is the <code>.opt</code> 'Operational template' which is uploaded to the CDR. It is essentially an aggregation of all the archetype constraints, and any local template constraints, which are than applied ot the underlying RM to give the full validation target.</p>
+<p>The .opt is a faithful representation of the underlying in-memory objects but is a pretty difficult beast to parse and understand.</p>
+<p>Fortunately Better provide a 'web template' utility which generates a JSON version of the validation statement but in a much more understandable format -both for human consumption and parsing. The web template facility is available both from the Ehrscape API, and as an export option from the openEHR Archetype Designer. We understand that ehrBase are developing a similar export facility and we expect this to become part of the openEHR standard in due course.</p>
+<h4>Better Ehrscape: `GET /template - Retrieve a web template'</h4>
+<h5>Parameters</h5>
+<p><strong><code>templateId</code></strong>:<br />
+This is the identifier of the openEHR template, against which you need to validate the composition, in this case <code>DHI - Urology_PROMs-v0</code>  </p>
+<p><strong><code>format</code></strong>:<br />
+This defines the format of JSON or XML that you are sending. Use <code>STRUCTURED</code> for this example.</p>
+<h5>Request</h5>
+<div class="tabbed-set" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Postman</label><div class="tabbed-content">
+<p><img alt="" src="../../images/dhi-web-template-postman.png" /></p>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">cURL</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>    curl --location <span class="se">\</span>
+    --request GET <span class="s1">&#39;https://rest.ehrscape.com/rest/v1/template/JMOHW - Passport observations.v0&#39;</span> <span class="se">\</span>
+    --header <span class="s1">&#39;Authorization: Basic YTgxZjQ3YzYtYTc1Ny00ZTM0LWI2NDQtM2NjYzYyYjRhMDFjOiQyYSQxMCQ2MTlraQ==&#39;</span> <span class="se">\</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">NodeJS/Axios</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>    <span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;axios&#39;</span><span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span>
+     <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;https://rest.ehrscape.com/rest/v1/template/JMOHW - Passport observations.v0&#39;</span><span class="p">,</span>
+    <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span> 
+        <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Authorization&#39;</span><span class="o">:</span> <span class="s1">&#39;Basic YTgxZjQ3YzYtYTc1Ny00ZTM0LWI2NDQtM2NjYzYyYjRhMDFjOiQyYSQxMCQ2MTlraQ==&#39;</span><span class="p">,</span> 
+
+            <span class="p">};</span>
+
+    <span class="nx">axios</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">));</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">});</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><label for="__tabbed_1_4">Python/requests</label><div class="tabbed-content">
+<div class="codehilite"><pre><span></span><code><span class="sb">``</span><span class="err">`</span><span class="n">python</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://rest.ehrscape.com/rest/v1/template/JMOHW - Passport observations.v0&quot;</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Basic YTgxZjQ3YzYtYTc1Ny00ZTM0LWI2NDQtM2NjYzYyYjRhMDFjOiQyYSQxMCQ2MTlraQ==&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+
+<p>```</p>
+</div>
+</div>
+<h5>Response</h5>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;meta&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://cdr.code4health.org/rest/v1/template/JMOHW%20-%20Passport%20observations.v0&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;webTemplate&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;templateId&quot;</span><span class="p">:</span> <span class="s2">&quot;JMOHW - Passport observations.v0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;2.3&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;defaultLanguage&quot;</span><span class="p">:</span> <span class="s2">&quot;en&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;languages&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;en&quot;</span>
+        <span class="p">],</span>
+        <span class="nt">&quot;tree&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;passport_observations&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Passport observations&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Passport observations&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;COMPOSITION&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;openEHR-EHR-COMPOSITION.encounter.v1&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Passport observations&quot;</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Interaction, contact or care event between a subject of care and healthcare provider(s).&quot;</span>
+            <span class="p">},</span>
+            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;context&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;EVENT_CONTEXT&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/context&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;start_time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Start_time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_DATE_TIME&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/context/start_time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATETIME&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;setting&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Setting&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_CODED_TEXT&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/context/setting&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;blood_pressure&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Blood pressure&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Blood pressure&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;OBSERVATION&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;openEHR-EHR-OBSERVATION.blood_pressure.v2&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Blood pressure&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;The local measurement of arterial blood pressure which is a surrogate for arterial pressure in the systemic circulation.&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;Most commonly, use of the term &#39;blood pressure&#39; refers to measurement of brachial artery pressure in the upper arm.&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.blood_pressure.v2]&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;systolic&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Systolic&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Systolic&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_QUANTITY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;at0004&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Systolic&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Peak systemic arterial blood pressure  - measured in systolic or contraction phase of the heart cycle.&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.blood_pressure.v2]/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;magnitude&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DECIMAL&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                                            <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">1000.0</span>
+                                        <span class="p">},</span>
+                                        <span class="nt">&quot;precision&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                            <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">0</span>
+                                        <span class="p">}</span>
+                                    <span class="p">}</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;unit&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;CODED_TEXT&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                        <span class="p">{</span>
+                                            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;mm[Hg]&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;mm[Hg]&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;localizedLabels&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;mmHg&quot;</span>
+                                            <span class="p">},</span>
+                                            <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                    <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                                                    <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">1000.0</span>
+                                                <span class="p">},</span>
+                                                <span class="nt">&quot;precision&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                    <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                                    <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">0</span>
+                                                <span class="p">}</span>
+                                            <span class="p">}</span>
+                                        <span class="p">}</span>
+                                    <span class="p">]</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;termBindings&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;SNOMED-CT&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;[SNOMED-CT(2003)::271649006]&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;terminologyId&quot;</span><span class="p">:</span> <span class="s2">&quot;SNOMED-CT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;diastolic&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Diastolic&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Diastolic&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_QUANTITY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;at0005&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Diastolic&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Minimum systemic arterial blood pressure - measured in the diastolic or relaxation phase of the heart cycle.&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.blood_pressure.v2]/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;magnitude&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DECIMAL&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                                            <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">1000.0</span>
+                                        <span class="p">},</span>
+                                        <span class="nt">&quot;precision&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                            <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">0</span>
+                                        <span class="p">}</span>
+                                    <span class="p">}</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;unit&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;CODED_TEXT&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                        <span class="p">{</span>
+                                            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;mm[Hg]&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;mm[Hg]&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;localizedLabels&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;mmHg&quot;</span>
+                                            <span class="p">},</span>
+                                            <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                    <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                                                    <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">1000.0</span>
+                                                <span class="p">},</span>
+                                                <span class="nt">&quot;precision&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                    <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                                    <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">0</span>
+                                                <span class="p">}</span>
+                                            <span class="p">}</span>
+                                        <span class="p">}</span>
+                                    <span class="p">]</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;termBindings&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;SNOMED-CT&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;[SNOMED-CT(2003)::271650006]&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;terminologyId&quot;</span><span class="p">:</span> <span class="s2">&quot;SNOMED-CT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_DATE_TIME&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.blood_pressure.v2]/data[at0001]/events[at0006]/time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATETIME&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.blood_pressure.v2]/language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.blood_pressure.v2]/encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;PARTY_PROXY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.blood_pressure.v2]/subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_scheme&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_namespace&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">}</span>
+                    <span class="p">],</span>
+                    <span class="nt">&quot;termBindings&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;SNOMED-CT&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;[SNOMED-CT(2003)::364090009]&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;terminologyId&quot;</span><span class="p">:</span> <span class="s2">&quot;SNOMED-CT&quot;</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;height_length&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Height/Length&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Height/Length&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;OBSERVATION&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;openEHR-EHR-OBSERVATION.height.v2&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Height/Length&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Height, or body length, is measured from crown of head to sole of foot.&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;Height is measured with the individual in a standing position and body length in a recumbent position.&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.height.v2]&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;height_length&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Height/Length&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Height/Length&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_QUANTITY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;at0004&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Height/Length&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;The length of the body from crown of head to sole of foot.&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.height.v2]/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;magnitude&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DECIMAL&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                                            <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">1000.0</span>
+                                        <span class="p">}</span>
+                                    <span class="p">}</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;unit&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;CODED_TEXT&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                        <span class="p">{</span>
+                                            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;cm&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;cm&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                    <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                                                    <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">1000.0</span>
+                                                <span class="p">}</span>
+                                            <span class="p">}</span>
+                                        <span class="p">}</span>
+                                    <span class="p">]</span>
+                                <span class="p">}</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_DATE_TIME&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.height.v2]/data[at0001]/events[at0002]/time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATETIME&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.height.v2]/language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.height.v2]/encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;PARTY_PROXY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.height.v2]/subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_scheme&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_namespace&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;body_weight&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Body weight&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Body weight&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;OBSERVATION&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;openEHR-EHR-OBSERVATION.body_weight.v2&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Body weight&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Measurement of the body weight of an individual.&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_weight.v2]&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;weight&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Weight&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Weight&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_QUANTITY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;at0004&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Weight&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;The weight of the individual.&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_weight.v2]/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;magnitude&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DECIMAL&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                                            <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">1000.0</span>
+                                        <span class="p">}</span>
+                                    <span class="p">}</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;unit&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;CODED_TEXT&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                        <span class="p">{</span>
+                                            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;kg&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;kg&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                    <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                                                    <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">1000.0</span>
+                                                <span class="p">}</span>
+                                            <span class="p">}</span>
+                                        <span class="p">}</span>
+                                    <span class="p">]</span>
+                                <span class="p">}</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_DATE_TIME&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_weight.v2]/data[at0002]/events[at0003]/time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATETIME&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_weight.v2]/language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_weight.v2]/encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;PARTY_PROXY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_weight.v2]/subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_scheme&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_namespace&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;blood_glucose&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Blood glucose&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Blood glucose&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;OBSERVATION&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;openEHR-EHR-OBSERVATION.laboratory_test_result.v1&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Blood glucose&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;The result, including findings and the laboratory&#39;s interpretation, of an investigation performed on specimens collected from an individual or related to that individual.&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1,&#39;Blood glucose&#39;]&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;test_name&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Test name&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Test name&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_CODED_TEXT&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;at0005&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Test name&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Name of the laboratory investigation performed on the specimen(s).&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;A test result may be for a single analyte, or a group of items, including panel tests. It is strongly recommended that &#39;Test name&#39; be coded with a terminology, for example LOINC or SNOMED CT. For example: &#39;Glucose&#39;, &#39;Urea and Electrolytes&#39;, &#39;Swab&#39;, &#39;Cortisol (am)&#39;, &#39;Potassium in perspiration&#39; or &#39;Melanoma histopathology&#39;. The name may sometimes include specimen type and patient state, for example &#39;Fasting blood glucose&#39; or include other information, as &#39;Potassium (PNA blood gas)&#39;.&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1,&#39;Blood glucose&#39;]/data[at0001]/events[at0002]/data[at0003]/items[at0005]/value&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;CODED_TEXT&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                        <span class="p">{</span>
+                                            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;14743-9&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Glucose [Moles/volume] in Capillary blood by Glucometer&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;localizedLabels&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+                                            <span class="p">}</span>
+                                        <span class="p">}</span>
+                                    <span class="p">],</span>
+                                    <span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span> <span class="s2">&quot;14743-9&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;terminology&quot;</span><span class="p">:</span> <span class="s2">&quot;LOINC&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;laboratory_analyte_result&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Laboratory analyte result&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Laboratory analyte result&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CLUSTER&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;openEHR-EHR-CLUSTER.laboratory_test_analyte.v1&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Laboratory analyte result&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;The result of a laboratory test for a single analyte value.&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1,&#39;Blood glucose&#39;]/data[at0001]/events[at0002]/data[at0003]/items[openEHR-EHR-CLUSTER.laboratory_test_analyte.v1]&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;analyte_name&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Analyte name&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Analyte name&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_CODED_TEXT&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;at0024&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                                    <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Analyte name&quot;</span>
+                                    <span class="p">},</span>
+                                    <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;The name of the analyte result.&quot;</span>
+                                    <span class="p">},</span>
+                                    <span class="nt">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;The value for this element is normally supplied in a specialisation, in a template or at run-time to reflect the actual analyte. For example: &#39;Serum sodium&#39;, &#39;Haemoglobin&#39;. Coding with an external terminology is strongly recommended, such as LOINC, NPU, SNOMED CT, or local lab terminologies.&quot;</span><span class="p">,</span>
+                                        <span class="nt">&quot;hl7v2_mapping&quot;</span><span class="p">:</span> <span class="s2">&quot;OBX.3&quot;</span><span class="p">,</span>
+                                        <span class="nt">&quot;fhir_mapping&quot;</span><span class="p">:</span> <span class="s2">&quot;Observation.code&quot;</span>
+                                    <span class="p">},</span>
+                                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1,&#39;Blood glucose&#39;]/data[at0001]/events[at0002]/data[at0003]/items[openEHR-EHR-CLUSTER.laboratory_test_analyte.v1]/items[at0024]/value&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                        <span class="p">{</span>
+                                            <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;CODED_TEXT&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                                <span class="p">{</span>
+                                                    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;14743-9&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Glucose [Moles/volume] in Capillary blood by Glucometer&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;localizedLabels&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+                                                    <span class="p">}</span>
+                                                <span class="p">}</span>
+                                            <span class="p">],</span>
+                                            <span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span> <span class="s2">&quot;14743-9&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;terminology&quot;</span><span class="p">:</span> <span class="s2">&quot;LOINC&quot;</span>
+                                        <span class="p">}</span>
+                                    <span class="p">]</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;analyte_result&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Analyte result&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Analyte result&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_QUANTITY&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;at0001&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                                    <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Analyte result&quot;</span>
+                                    <span class="p">},</span>
+                                    <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;The value of the analyte result.&quot;</span>
+                                    <span class="p">},</span>
+                                    <span class="nt">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;For example &#39;7.3 mmol/l&#39;, &#39;Raised&#39;. The &#39;Any&#39; data type will need to be constrained to an appropriate data type in a specialisation, a template or at run-time to reflect the actual analyte result. The Quantity data type has reference model attributes that include flags for normal/abnormal, reference ranges and approximations - see https://specifications.openehr.org/releases/RM/latest/data_types.html#_dv_quantity_class for more details.&quot;</span><span class="p">,</span>
+                                        <span class="nt">&quot;hl7v2_mapping&quot;</span><span class="p">:</span> <span class="s2">&quot;OBX.2, OBX.5, OBX.6, OBX.7, OBX.8&quot;</span><span class="p">,</span>
+                                        <span class="nt">&quot;fhir_mapping&quot;</span><span class="p">:</span> <span class="s2">&quot;Observation.value[x]&quot;</span>
+                                    <span class="p">},</span>
+                                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1,&#39;Blood glucose&#39;]/data[at0001]/events[at0002]/data[at0003]/items[openEHR-EHR-CLUSTER.laboratory_test_analyte.v1]/items[at0001]/value&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                        <span class="p">{</span>
+                                            <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;magnitude&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DECIMAL&quot;</span>
+                                        <span class="p">},</span>
+                                        <span class="p">{</span>
+                                            <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;unit&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;CODED_TEXT&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                                <span class="p">{</span>
+                                                    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;mmol/L&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;mmol/L&quot;</span>
+                                                <span class="p">}</span>
+                                            <span class="p">]</span>
+                                        <span class="p">}</span>
+                                    <span class="p">]</span>
+                                <span class="p">}</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_DATE_TIME&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1,&#39;Blood glucose&#39;]/data[at0001]/events[at0002]/time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATETIME&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1,&#39;Blood glucose&#39;]/language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1,&#39;Blood glucose&#39;]/encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;PARTY_PROXY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1,&#39;Blood glucose&#39;]/subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_scheme&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_namespace&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;pulse_oximetry&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Pulse oximetry&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Pulse oximetry&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;OBSERVATION&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;openEHR-EHR-OBSERVATION.pulse_oximetry.v1&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Pulse oximetry&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Blood oxygen and related measurements, measured by pulse oximetry or pulse CO-oximetry.&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.pulse_oximetry.v1]&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;spo&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;SpO₂&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;SpO₂&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_PROPORTION&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;at0006&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;SpO₂&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;The saturation of oxygen in the peripheral blood, measured via pulse oximetry.&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;SpO₂ is defined as the percentage of oxyhaemoglobin (HbO₂) to the total concentration of haemoglobin (HbO₂ + deoxyhaemoglobin) in peripheral blood.&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.pulse_oximetry.v1]/data[at0001]/events[at0002]/data[at0003]/items[at0006]/value&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;proportionTypes&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="s2">&quot;percent&quot;</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;numerator&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DECIMAL&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+                                            <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">100.0</span>
+                                        <span class="p">}</span>
+                                    <span class="p">},</span>
+                                    <span class="nt">&quot;defaultValue&quot;</span><span class="p">:</span> <span class="mf">0.0</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;denominator&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DECIMAL&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">100.0</span><span class="p">,</span>
+                                            <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">100.0</span>
+                                        <span class="p">}</span>
+                                    <span class="p">}</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;termBindings&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;SNOMED-CT&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;[SNOMED-CT::431314004]&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;terminologyId&quot;</span><span class="p">:</span> <span class="s2">&quot;SNOMED-CT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="nt">&quot;LOINC&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;[LOINC::59408-5]&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;terminologyId&quot;</span><span class="p">:</span> <span class="s2">&quot;LOINC&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_DATE_TIME&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.pulse_oximetry.v1]/data[at0001]/events[at0002]/time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATETIME&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.pulse_oximetry.v1]/language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.pulse_oximetry.v1]/encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;PARTY_PROXY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.pulse_oximetry.v1]/subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_scheme&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_namespace&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;body_temperature&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Body temperature&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Body temperature&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;OBSERVATION&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;openEHR-EHR-OBSERVATION.body_temperature.v2&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Body temperature&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;A measurement of the body temperature, which is a surrogate for the core body temperature of the individual.&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_temperature.v2]&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;temperature&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_QUANTITY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;at0004&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Temperature&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;The measured body temperature (as a surrogate for the core of the body).&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_temperature.v2]/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;magnitude&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DECIMAL&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">30.0</span><span class="p">,</span>
+                                            <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">200.0</span>
+                                        <span class="p">},</span>
+                                        <span class="nt">&quot;precision&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                                            <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                                        <span class="p">}</span>
+                                    <span class="p">}</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;unit&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;CODED_TEXT&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                        <span class="p">{</span>
+                                            <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;[degF]&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;[degF]&quot;</span><span class="p">,</span>
+                                            <span class="nt">&quot;localizedLabels&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;°F&quot;</span>
+                                            <span class="p">},</span>
+                                            <span class="nt">&quot;validation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                <span class="nt">&quot;range&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                    <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mf">30.0</span><span class="p">,</span>
+                                                    <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mf">200.0</span>
+                                                <span class="p">},</span>
+                                                <span class="nt">&quot;precision&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                                    <span class="nt">&quot;minOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                                                    <span class="nt">&quot;maxOp&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;=&quot;</span><span class="p">,</span>
+                                                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span>
+                                                <span class="p">}</span>
+                                            <span class="p">}</span>
+                                        <span class="p">}</span>
+                                    <span class="p">]</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;termBindings&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;LNC205&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;[LNC205::8310-5]&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;terminologyId&quot;</span><span class="p">:</span> <span class="s2">&quot;LNC205&quot;</span>
+                                <span class="p">},</span>
+                                <span class="nt">&quot;SNOMED-CT&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;[SNOMED-CT::386725007]&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;terminologyId&quot;</span><span class="p">:</span> <span class="s2">&quot;SNOMED-CT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">}</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_DATE_TIME&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_temperature.v2]/data[at0002]/events[at0003]/time&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATETIME&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_temperature.v2]/language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_temperature.v2]/encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;PARTY_PROXY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-OBSERVATION.body_temperature.v2]/subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_scheme&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_namespace&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;clinical_synopsis&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Clinical synopsis&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Clinical synopsis&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;EVALUATION&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;openEHR-EHR-EVALUATION.clinical_synopsis.v1&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Clinical synopsis&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Narrative summary or overview about a patient, specifically from the perspective of a healthcare provider, and with or without associated interpretations.&quot;</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-EVALUATION.clinical_synopsis.v1]&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;notes&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Notes&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedName&quot;</span><span class="p">:</span> <span class="s2">&quot;Notes&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_TEXT&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;at0002&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;localizedNames&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;Notes&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;localizedDescriptions&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;The summary, assessment, conclusions or evaluation of the clinical findings.&quot;</span>
+                            <span class="p">},</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-EVALUATION.clinical_synopsis.v1]/data[at0001]/items[at0002,&#39;Notes&#39;]/value&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">]</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-EVALUATION.clinical_synopsis.v1]/language&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-EVALUATION.clinical_synopsis.v1]/encoding&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;PARTY_PROXY&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                            <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/content[openEHR-EHR-EVALUATION.clinical_synopsis.v1]/subject&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_scheme&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_namespace&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">},</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                        <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;DV_CODED_TEXT&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;nodeId&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/category&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;code&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;CODED_TEXT&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;list&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="nt">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;433&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;event&quot;</span><span class="p">,</span>
+                                    <span class="nt">&quot;localizedLabels&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;event&quot;</span>
+                                    <span class="p">}</span>
+                                <span class="p">}</span>
+                            <span class="p">],</span>
+                            <span class="nt">&quot;terminology&quot;</span><span class="p">:</span> <span class="s2">&quot;openehr&quot;</span>
+                        <span class="p">}</span>
+                    <span class="p">],</span>
+                    <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;language&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Language&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/language&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;territory&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Territory&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;CODE_PHRASE&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/territory&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;composer&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Composer&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;rmType&quot;</span><span class="p">:</span> <span class="s2">&quot;PARTY_PROXY&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;min&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="nt">&quot;max&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nt">&quot;aqlPath&quot;</span><span class="p">:</span> <span class="s2">&quot;/composer&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_scheme&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;id_namespace&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                        <span class="p">},</span>
+                        <span class="p">{</span>
+                            <span class="nt">&quot;suffix&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+                            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;TEXT&quot;</span>
+                        <span class="p">}</span>
+                    <span class="p">],</span>
+                    <span class="nt">&quot;inContext&quot;</span><span class="p">:</span> <span class="kc">true</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../JPASS11-updating-observation-data/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Updating Patient Observations data
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../JPASS13-openehr-datatypes/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              openEHR Datatypes
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+    
+  </body>
+</html>

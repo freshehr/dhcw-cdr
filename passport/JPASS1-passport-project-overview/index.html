@@ -1,0 +1,814 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../images/NWISWalesNHSUK2.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>Overview of the Passport-JDP project - openEHR CDR API for client-side developers (DHCW)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="teal">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#overview-of-the-passport-jdp-project" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="openEHR CDR API for client-side developers (DHCW)" class="md-header__button md-logo" aria-label="openEHR CDR API for client-side developers (DHCW)" data-md-component="logo">
+      
+  <img src="../../images/NWISWalesNHSUK2.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            openEHR CDR API for client-side developers (DHCW)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview of the Passport-JDP project
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="openEHR CDR API for client-side developers (DHCW)" class="md-nav__button md-logo" aria-label="openEHR CDR API for client-side developers (DHCW)" data-md-component="logo">
+      
+  <img src="../../images/NWISWalesNHSUK2.png" alt="logo">
+
+    </a>
+    openEHR CDR API for client-side developers (DHCW)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Introduction to openEHR
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Introduction to openEHR" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction to openEHR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT1-overview-openehr/" class="md-nav__link">
+        Overview of openEHR
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT2-overview-rest-apis/" class="md-nav__link">
+        Overview of openEHR REST APIs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT3-archetypes-template/" class="md-nav__link">
+        openEHR archetypes and templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT4-reference-model/" class="md-nav__link">
+        openEHR Reference Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM1-postman-getting-ready/" class="md-nav__link">
+        Getting ready with Postman
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM2-navigate-postman/" class="md-nav__link">
+        Navigate Postman
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM3-using-postman/" class="md-nav__link">
+        Using Postman with Ehrscape
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Jamaica Passport project
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Jamaica Passport project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Jamaica Passport project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Overview of the Passport-JDP project
+      </a>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS2-retrieving-an-ehrid/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS3-querying-allergies/" class="md-nav__link">
+        Querying for patient allergies
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS7-querying-compositions/" class="md-nav__link">
+        Querying for recent compositions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS9-committing-observation-data/" class="md-nav__link">
+        Committing Observation data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS10-retrieving-observation-data/" class="md-nav__link">
+        Retrieving a Patient Observations Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS11-updating-observation-data/" class="md-nav__link">
+        Updating Patient Observations data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS12-composition-constraints/" class="md-nav__link">
+        Understanding composition Constraints and validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS13-openehr-datatypes/" class="md-nav__link">
+        openEHR Datatypes
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JPASS14-openehr-rm-attributes/" class="md-nav__link">
+        Key openEHR RM attributes
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        openCDR API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="openCDR API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          openCDR API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR1-authentication/" class="md-nav__link">
+        Getting started - Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR2-openehr-templates/" class="md-nav__link">
+        Working with openEHR Templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR3-committing-a-composition/" class="md-nav__link">
+        Committing Observation data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR4-retrieving-a-composition/" class="md-nav__link">
+        Retrieving an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR5-creating-an-ehr/" class="md-nav__link">
+        Creating a new patient 'EHR'
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR6-retrieving-an-ehrid/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Better Ehrscape API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Better Ehrscape API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Better Ehrscape API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR1-authentication/" class="md-nav__link">
+        Getting started - Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR2-openehr-templates/" class="md-nav__link">
+        Working with openEHR Templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR3-committing-a-composition/" class="md-nav__link">
+        Committing openEHR data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR4-retrieving-a-composition/" class="md-nav__link">
+        Retrieving an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR5-retrieving-an-ehrId/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ehrscape/ECDR6-updating-a-composition/" class="md-nav__link">
+        Updating an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="overview-of-the-passport-jdp-project">Overview of the Passport-JDP project</h1>
+<p>This section covers some examples that are very specific to the JMoHW Passport project. </p>
+<p>The proposed JMoHW Data Platform (JDP) will be based on an openEHR CDR, which is simulated for this project by a sandbox environment provided by the Apperta UK non-profit, and based on the Better CDR product. This is free to use for demonstration purposes and dummy patient data.</p>
+<p>The initial CDR dataset is aligned to the needs of Non-communicable disease management, including the data handled by Passport.</p>
+<p>As well as the Passport app demonstrator, a very simple web-based prototype app will be built to simulate a clinician-facing app, making use of the same CDR and able to access/visualise the data submitted to and received from the Passport app.</p>
+<div class="admonition important">
+<p class="admonition-title">Better Ehrscape API vs. openCDR API usage</p>
+</div>
+<p>Most of the calls are based on the 'canonical openEHR REST API which we wil refer to as the 'openCDR' API, other than calls to the /composition resource.
+   Calls to the /composition resource are currently set to  make use of the Better Ehrscape API, as the openCDR API does not currently support the <code>FLAT JSON</code> data formats that we will be using. This support is under development e.g by EhrBase and will require only a minor change when implemented.</p>
+<p>The demonstrator use-cases for Passport are ...</p>
+<h3>1. Retrieve key sets of read-only data from the CDR</h3>
+<p>Access a patient record from the JDP sandbox via the openEHR query mechanism (AQL).</p>
+<p>The initial proposed queries are</p>
+<ul>
+<li>Current allergies</li>
+<li>Current and recent medications</li>
+<li>Immunisations</li>
+<li>Current problems/diagnoses</li>
+<li>Hospitalisations</li>
+<li>Recent additions to the CDR record (date, name of clinical author, name of document etc).</li>
+</ul>
+<p>Final exact details to be discussed with JMoHW  but the principles will not change.</p>
+<h4>Technical Tasks</h4>
+<ol>
+<li>Retrieve the patient JDP <code>ehrId</code> from their <code>subjectId</code> - <a href="../JPASS2-retrieving-an-ehrid/">Retrieving the patient's ehrID</a> </li>
+<li>run an AQL query to find a list of current Allergies and display the queried data - <a href="../JPASS3-querying-allergies/">Querying JDP Allergies</a>.</li>
+<li>run an AQL query to find a list of current Medications (if it exists) and display the queried data  - <a href="../JPASS4-querying-medications/">Querying JDP Medication</a>.</li>
+<li>run an AQL query to find a list of Hospitalizations and display the queried data) - <a href="../JPASS5-querying-hospitalisations/">Querying JDP Hospitalization</a>.</li>
+<li>run an AQL query to find a list of Immunization and display the queried data) - <a href="../JPASS6-querying-immunizations/">Querying JDP Immunization</a>.</li>
+<li>run an AQL query to find a list of recently created Compositions and display the queried data) - <a href="../JPASS7-querying-compositions/">Querying JDP recent Compositions</a>.</li>
+<li>run an AQL query to find a list of Diagnoses and display the queried data) - <a href="../JPASS8-querying-diagnoses/">Querying JDP Diagnoses</a>.</li>
+</ol>
+<h3>2. Work with Patient-derived Observations data</h3>
+<p>Allow patient to enter some simple observational data via their PHR app (Passport) and have it stored in the JDP-CDR. Also display all recent Observation data (however committed) via a query to the JDP-CDR.</p>
+<h4>Technical Tasks</h4>
+<ol>
+<li>Retrieve the patient JDP <code>ehrId</code> from their SubjectId - <a href="../JPASS2-retrieving-an-ehrid/">Retrieving the patient's ehrID</a>. </li>
+<li>Commit a composition to the JDP-CDR via a composition (FLAT format) - <a href="../JPASS9-committing-observation-data/">Committing patient Observations</a>.</li>
+<li>Retrieve that composition - <a href="../JPASS10-retrieving-observation-data/">retrieving patient Observations</a>.</li>
+<li>Query <strong>all</strong> recent Observation data, including that recorded on the JDP by other applications.</li>
+</ol>
+<div class="admonition important">
+<p class="admonition-title">Better Ehrscape API vs. openEHR REST API</p>
+</div>
+<p>For now, we will make use of the Better Ehrscape API for the /composition calls, rather than the openCDR API, even though the latter is what will be used by the actual JDP-CDR. </p>
+<p>The primary reason is that, right now, Better support some simplified data formats which are easier for third-party vendors to work with. We know that ehrBase is actively working on support for these formats, and an early release is imminent, so this advice may change.</p>
+<p>We will supply some documentation to show how, once committed, the same data can be accessed and queried via the openEHR REST API.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../../postman/PM3-using-postman/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Using Postman with Ehrscape
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../JPASS2-retrieving-an-ehrid/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Retrieving the patient's ehrId
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+    
+  </body>
+</html>

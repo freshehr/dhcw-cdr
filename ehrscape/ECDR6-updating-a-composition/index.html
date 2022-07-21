@@ -1,0 +1,1245 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="icon" href="../../images/NWISWalesNHSUK2.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
+    
+    
+      
+        <title>Updating an openEHR Composition - openEHR CDR API for client-side developers (DHCW)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.bde7dde4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#546d78">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue-grey" data-md-color-accent="teal">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#updating-an-openehr-composition" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="openEHR CDR API for client-side developers (DHCW)" class="md-header__button md-logo" aria-label="openEHR CDR API for client-side developers (DHCW)" data-md-component="logo">
+      
+  <img src="../../images/NWISWalesNHSUK2.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            openEHR CDR API for client-side developers (DHCW)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Updating an openEHR Composition
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="openEHR CDR API for client-side developers (DHCW)" class="md-nav__button md-logo" aria-label="openEHR CDR API for client-side developers (DHCW)" data-md-component="logo">
+      
+  <img src="../../images/NWISWalesNHSUK2.png" alt="logo">
+
+    </a>
+    openEHR CDR API for client-side developers (DHCW)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      <label class="md-nav__link" for="__nav_2">
+        Introduction to openEHR
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Introduction to openEHR" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction to openEHR
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT1-overview-openehr/" class="md-nav__link">
+        Overview of openEHR
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT2-overview-rest-apis/" class="md-nav__link">
+        Overview of openEHR REST APIs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT3-archetypes-template/" class="md-nav__link">
+        openEHR archetypes and templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../intro/INT4-reference-model/" class="md-nav__link">
+        openEHR Reference Model
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM1-postman-getting-ready/" class="md-nav__link">
+        Getting ready with Postman
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM2-navigate-postman/" class="md-nav__link">
+        Navigate Postman
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../postman/PM3-using-postman/" class="md-nav__link">
+        Using Postman with Ehrscape
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Jamaica Passport project
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Jamaica Passport project" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Jamaica Passport project
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS1-passport-project-overview/" class="md-nav__link">
+        Overview of the Passport-JDP project
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS2-retrieving-an-ehrid/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS3-querying-allergies/" class="md-nav__link">
+        Querying for patient allergies
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS7-querying-compositions/" class="md-nav__link">
+        Querying for recent compositions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS9-committing-observation-data/" class="md-nav__link">
+        Committing Observation data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS10-retrieving-observation-data/" class="md-nav__link">
+        Retrieving a Patient Observations Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS11-updating-observation-data/" class="md-nav__link">
+        Updating Patient Observations data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS12-composition-constraints/" class="md-nav__link">
+        Understanding composition Constraints and validation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS13-openehr-datatypes/" class="md-nav__link">
+        openEHR Datatypes
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../passport/JPASS14-openehr-rm-attributes/" class="md-nav__link">
+        Key openEHR RM attributes
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        openCDR API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="openCDR API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          openCDR API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR1-authentication/" class="md-nav__link">
+        Getting started - Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR2-openehr-templates/" class="md-nav__link">
+        Working with openEHR Templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR3-committing-a-composition/" class="md-nav__link">
+        Committing Observation data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR4-retrieving-a-composition/" class="md-nav__link">
+        Retrieving an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR5-creating-an-ehr/" class="md-nav__link">
+        Creating a new patient 'EHR'
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../opencdr/OCDR6-retrieving-an-ehrid/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+      
+      <label class="md-nav__link" for="__nav_5">
+        Better Ehrscape API
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Better Ehrscape API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Better Ehrscape API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ECDR1-authentication/" class="md-nav__link">
+        Getting started - Authentication
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ECDR2-openehr-templates/" class="md-nav__link">
+        Working with openEHR Templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ECDR3-committing-a-composition/" class="md-nav__link">
+        Committing openEHR data
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ECDR4-retrieving-a-composition/" class="md-nav__link">
+        Retrieving an openEHR Composition
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ECDR5-retrieving-an-ehrId/" class="md-nav__link">
+        Retrieving the patient's ehrId
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Updating an openEHR Composition
+      </a>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="updating-an-openehr-composition">Updating an openEHR Composition</h1>
+<p>All new data committed to an openEHR CDR is done so via a <code>POST /composition call</code> - as a JSON or XML 'blob'.</p>
+<p>Most compositions will only need to be updated if an error or omission needs to be corrected. All openEHR data is strictly audited and version controlled, so an Update operation requires a <code>PUT /composition call</code>.</p>
+<p>You will nearly always with to first retrieve the original version of the composition via a <code>GET /composition</code> call, update the JSON or XML object and then perform the <code>PUT</code></p>
+<h4>Better Ehrscape <code>PUT /composition - Update composition</code></h4>
+<h5>Parameters</h5>
+<p><code>compositionId</code>: 
+This is is the <code>composition UID</code> for the <strong>previous version</strong> of the composition i.e the version that you are about to overwrite. Don't worry about how we find this, just use the <code>uid</code> for the composition you just committed in the last section.</p>
+<p><code>format</code>:
+This defines the format of JSON or XML that you are requesting. Use <code>STRUCTURED</code> for this example.</p>
+<p><code>templateId</code>: 
+This is the identifier of the openEHR template, against which you need to validate the composition, in this case, <code>DHI - Urology_PROMs-v0</code>.</p>
+<h5>Request</h5>
+<div class="tabbed-set" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Postman</label><div class="tabbed-content">
+<p><img alt="" src="../../images/dhi-proms-update-postman.png" /></p>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">cURL</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>   curl --location --request PUT <span class="s1">&#39;https://rest.ehrscape.com/rest/v1/rest/v1/composition/b0d7f6cb-a429-49b2-b5f3-9637b409eebd::a81f47c6-a757-4e34-b644-3ccc62b4a01c::1?format=STRUCTURED&amp;templateId=DHI%20-%20Urology_PROMs-v0&#39;</span> <span class="se">\</span>
+--header <span class="s1">&#39;Content-Type: application/json&#39;</span> <span class="se">\</span>
+--header <span class="s1">&#39;Authorization: Basic YTgxZjQ3YzYtYTc1Ny00ZTM0LWI2NDQtM2NjYzYyYjRhMDFjOiQyYSQxMCQ2MTlraQ==&#39;</span> <span class="se">\</span>
+--data-raw <span class="s1">&#39;{</span>
+<span class="s1">        &quot;prostate_cancer_proms_report&quot;: {</span>
+<span class="s1">            &quot;language&quot;: [</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;|code&quot;: &quot;en&quot;,</span>
+<span class="s1">                    &quot;|terminology&quot;: &quot;ISO_639-1&quot;</span>
+<span class="s1">                }</span>
+<span class="s1">            ],</span>
+<span class="s1">            &quot;territory&quot;: [</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;|code&quot;: &quot;EN&quot;,</span>
+<span class="s1">                    &quot;|terminology&quot;: &quot;ISO_3166-1&quot;</span>
+<span class="s1">                }</span>
+<span class="s1">            ],</span>
+<span class="s1">            &quot;context&quot;: [</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;xds_metadata&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;document_type&quot;: [</span>
+<span class="s1">                                &quot;Patient recorded outcome measures&quot;</span>
+<span class="s1">                            ]</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;start_time&quot;: [</span>
+<span class="s1">                        &quot;2020-07-05T13:32:56.186Z&quot;</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;setting&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;238&quot;,</span>
+<span class="s1">                            &quot;|value&quot;: &quot;other care&quot;,</span>
+<span class="s1">                            &quot;|terminology&quot;: &quot;openehr&quot;</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ]</span>
+<span class="s1">                }</span>
+<span class="s1">            ],</span>
+<span class="s1">            &quot;what_matters_to_me&quot;: [</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;what_matters_to_me&quot;: [</span>
+<span class="s1">                    &quot;Parents&quot;,</span>
+<span class="s1">                    &quot;Mood&quot;,</span>
+<span class="s1">                    &quot;Isolation&quot;,</span>
+<span class="s1">                    &quot;Eating&quot;,</span>
+<span class="s1">                    &quot;Family&quot;,</span>
+<span class="s1">                    &quot;Safety&quot;</span>
+<span class="s1">                    ]</span>
+<span class="s1">                }</span>
+<span class="s1">                ],</span>
+<span class="s1">                &quot;howru_score&quot;: [ {</span>
+<span class="s1">                &quot;pain_or_discomfort&quot;: [</span>
+<span class="s1">                    {</span>
+<span class="s1">                        &quot;|code&quot;: &quot;at0041&quot;,</span>
+<span class="s1">                        &quot;|value&quot;: &quot;slight&quot;,</span>
+<span class="s1">                        &quot;|ordinal&quot;: 1</span>
+<span class="s1">                    }</span>
+<span class="s1">                ],</span>
+<span class="s1">                &quot;feeling_low_or_worried&quot;: [</span>
+<span class="s1">                    {</span>
+<span class="s1">                        &quot;|code&quot;: &quot;at0042&quot;,</span>
+<span class="s1">                        &quot;|value&quot;: &quot;quite a lot&quot;,</span>
+<span class="s1">                        &quot;|ordinal&quot;: 2</span>
+<span class="s1">                    }</span>
+<span class="s1">                ],</span>
+<span class="s1">                &quot;limited_in_what_i_can_do&quot;: [</span>
+<span class="s1">                    {</span>
+<span class="s1">                        &quot;|code&quot;: &quot;at0041&quot;,</span>
+<span class="s1">                        &quot;|value&quot;: &quot;slight&quot;,</span>
+<span class="s1">                        &quot;|ordinal&quot;: 1</span>
+<span class="s1">                    }</span>
+<span class="s1">                ],</span>
+<span class="s1">                &quot;dependent_on_others&quot;: [</span>
+<span class="s1">                    {</span>
+<span class="s1">                        &quot;|code&quot;: &quot;at0043&quot;,</span>
+<span class="s1">                        &quot;|value&quot;: &quot;extreme&quot;,</span>
+<span class="s1">                        &quot;|ordinal&quot;: 3</span>
+<span class="s1">                    }</span>
+<span class="s1">                ],</span>
+<span class="s1">                &quot;summary_score&quot;: [</span>
+<span class="s1">                    4</span>
+<span class="s1">                ],</span>
+<span class="s1">                &quot;time&quot;: [</span>
+<span class="s1">                    &quot;2020-07-21T15:41:54.175Z&quot;</span>
+<span class="s1">                ],</span>
+<span class="s1">                &quot;language&quot;: [</span>
+<span class="s1">                    {</span>
+<span class="s1">                        &quot;|code&quot;: &quot;en&quot;,</span>
+<span class="s1">                        &quot;|terminology&quot;: &quot;ISO_639-1&quot;</span>
+<span class="s1">                    }</span>
+<span class="s1">                ],</span>
+<span class="s1">                &quot;encoding&quot;: [</span>
+<span class="s1">                    {</span>
+<span class="s1">                        &quot;|code&quot;: &quot;UTF-8&quot;,</span>
+<span class="s1">                        &quot;|terminology&quot;: &quot;IANA_character-sets&quot;</span>
+<span class="s1">                    }</span>
+<span class="s1">                ]</span>
+<span class="s1">            }</span>
+<span class="s1">        ],</span>
+<span class="s1">            &quot;eortc_qlq-c30&quot;: [</span>
+
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;trouble_doing_strenuous_activities&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0007&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Quite a bit&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 3</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;trouble_taking_a_long_walk&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0040&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Quite a bit&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 3</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;trouble_taking_a_short_walk_outside_of_the_house&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0044&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Quite a bit&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 3</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;need_to_stay_in_bed_or_a_chair_during_the_day&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0049&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Very much&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 4</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;need_help_with_eating_dressing_washing_yourself_or_using_the_toilet&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0051&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;A little&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 2</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_were_limited_in_doing_either_work_or_other_daily_activities&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0056&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Quite a bit&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 3</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_were_limited_in_pursuing_hobbies_or_other_leisure_time_activities&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0060&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Quite a bit&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 3</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_had_short_of_breath&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0064&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Quite a bit&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 3</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_had_pain&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0067&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;A little&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 2</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_need_to_rest&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0072&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Quite a bit&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 3</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_had_trouble_sleeping&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0076&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Quite a bit&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 3</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_felt_weak&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0078&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Not at all&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 1</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_lacked_appetite&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0084&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Quite a bit&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 3</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_felt_nauseated&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0086&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Not at all&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 1</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_had_vomited&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0090&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Not at all&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 1</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_have_been_constipated&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0097&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Very much&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 4</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_had_diarrhea&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0099&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;A little&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 2</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_were_tired&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0102&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Not at all&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 1</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_pain_interfere_with_daily_activities&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0109&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Very much&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 4</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_had_difficulty_in_concentrating&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0110&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Not at all&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 1</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_felt_tense&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0115&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;A little&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 2</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_were_worried&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0121&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Very much&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 4</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_felt_irritable&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0123&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;A little&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 2</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_felt_depressed&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0128&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Quite a bit&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 3</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_had_difficulty_remembering_things&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0133&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Very much&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 4</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_physical_condition_or_medical_treatment_interfered_with_family_life&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0135&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;A little&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 2</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_physical_condition_or_medical_treatment_interfered_with_social_activities&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0138&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;Not at all&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 1</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;during_the_past_week_physical_condition_or_medical_treatment_caused_financial_difficulties&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0143&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;A little&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 2</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;rate_overall_health_during_the_past_week&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0147&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;2&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 2</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;rate_overall_quality_of_life_during_the_past_week&quot;: [</span>
+<span class="s1">                                {</span>
+<span class="s1">                                    &quot;|code&quot;: &quot;at0157&quot;,</span>
+<span class="s1">                                    &quot;|value&quot;: &quot;5&quot;,</span>
+<span class="s1">                                    &quot;|ordinal&quot;: 5</span>
+<span class="s1">                                }</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;total_score&quot;: [</span>
+<span class="s1">                                61</span>
+<span class="s1">                            ],</span>
+<span class="s1">                            &quot;time&quot;: [</span>
+<span class="s1">                                &quot;2020-07-15T16:47:06.320Z&quot;</span>
+<span class="s1">                            ],</span>
+<span class="s1">                    &quot;language&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;en&quot;,</span>
+<span class="s1">                            &quot;|terminology&quot;: &quot;ISO_639-1&quot;</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;encoding&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;UTF-8&quot;,</span>
+<span class="s1">                            &quot;|terminology&quot;: &quot;IANA_character-sets&quot;</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ]</span>
+<span class="s1">                }</span>
+<span class="s1">            ],</span>
+<span class="s1">            &quot;i-pss_prostate_score&quot;: [</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;a1._incomplete_emptying&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;at0015&quot;,</span>
+<span class="s1">                            &quot;|value&quot;: &quot;Less Than 1 Time In 5&quot;,</span>
+<span class="s1">                            &quot;|ordinal&quot;: 1</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;a2._frequency&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;at0016&quot;,</span>
+<span class="s1">                            &quot;|value&quot;: &quot;Less Than Half The Time&quot;,</span>
+<span class="s1">                            &quot;|ordinal&quot;: 2</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;a3._intermittency&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;at0017&quot;,</span>
+<span class="s1">                            &quot;|value&quot;: &quot;About Half The Time&quot;,</span>
+<span class="s1">                            &quot;|ordinal&quot;: 3</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;a4._urgency&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;at0017&quot;,</span>
+<span class="s1">                            &quot;|value&quot;: &quot;About Half The Time&quot;,</span>
+<span class="s1">                            &quot;|ordinal&quot;: 3</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;a5._weak_stream&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;at0016&quot;,</span>
+<span class="s1">                            &quot;|value&quot;: &quot;Less Than Half The Time&quot;,</span>
+<span class="s1">                            &quot;|ordinal&quot;: 2</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;a6._straining&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;at0018&quot;,</span>
+<span class="s1">                            &quot;|value&quot;: &quot;More Than Half The Time&quot;,</span>
+<span class="s1">                            &quot;|ordinal&quot;: 4</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;a7._nocturia&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;at0060&quot;,</span>
+<span class="s1">                            &quot;|value&quot;: &quot;3 times&quot;,</span>
+<span class="s1">                            &quot;|ordinal&quot;: 3</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;total_i-pss_score&quot;: [</span>
+<span class="s1">                        18</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;i-pss_score_grade&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;at0087&quot;,</span>
+<span class="s1">                            &quot;|value&quot;: &quot;8-19 Moderate&quot;,</span>
+<span class="s1">                            &quot;|terminology&quot;: &quot;local&quot;</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;time&quot;: [</span>
+<span class="s1">                        &quot;2020-07-05T13:32:56.186Z&quot;</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;language&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;en&quot;,</span>
+<span class="s1">                            &quot;|terminology&quot;: &quot;ISO_639-1&quot;</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ],</span>
+<span class="s1">                    &quot;encoding&quot;: [</span>
+<span class="s1">                        {</span>
+<span class="s1">                            &quot;|code&quot;: &quot;UTF-8&quot;,</span>
+<span class="s1">                            &quot;|terminology&quot;: &quot;IANA_character-sets&quot;</span>
+<span class="s1">                        }</span>
+<span class="s1">                    ]</span>
+<span class="s1">                }</span>
+<span class="s1">            ],</span>
+<span class="s1">            &quot;category&quot;: [</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;|code&quot;: &quot;433&quot;,</span>
+<span class="s1">                    &quot;|value&quot;: &quot;event&quot;,</span>
+<span class="s1">                    &quot;|terminology&quot;: &quot;openehr&quot;</span>
+<span class="s1">                }</span>
+<span class="s1">            ],</span>
+<span class="s1">            &quot;composer&quot;: [</span>
+<span class="s1">                {</span>
+<span class="s1">                    &quot;|name&quot;: &quot;John Smith&quot;</span>
+<span class="s1">                }</span>
+<span class="s1">            ]</span>
+<span class="s1">        }</span>
+<span class="s1">    }&#39;</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">NodeJS/Axios</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>  <span class="kd">var</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;axios&#39;</span><span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;put&#39;</span><span class="p">,</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;https://rest.ehrscape.com/rest/v1/rest/v1/composition/b0d7f6cb-a429-49b2-b5f3-9637b409eebd::a81f47c6-a757-4e34-b644-3ccc62b4a01c::1?format=STRUCTURED&amp;templateId=DHI%20-%20Urology_PROMs-v0&#39;</span><span class="p">,</span>
+    <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span> 
+        <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Authorization&#39;</span><span class="o">:</span> <span class="s1">&#39;Authorization: &#39;</span><span class="p">,</span> 
+    <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="nx">axios</span><span class="p">(</span><span class="nx">config</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">));</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">});</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><label for="__tabbed_1_4">Python/requests</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code> <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://rest.ehrscape.com/rest/v1/rest/v1/composition/b0d7f6cb-a429-49b2-b5f3-9637b409eebd::a81f47c6-a757-4e34-b644-3ccc62b4a01c::1?format=STRUCTURED&amp;templateId=DHI%20-%20Urology_PROMs-v0&quot;</span>
+
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Authorization: &#39;</span><span class="p">,</span>
+  <span class="p">}</span>
+
+  <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">payload</span><span class="p">)</span>
+
+  <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+</code></pre></div>
+
+</div>
+</div>
+<h5>Response</h5>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;meta&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;href&quot;</span><span class="p">:</span> <span class="s2">&quot;https://rest.ehrscape.com/rest/v1/rest/v1/composition/b0d7f6cb-a429-49b2-b5f3-9637b409eebd::a81f47c6-a757-4e34-b644-3ccc62b4a01c::2&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;UPDATE&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;compositionUid&quot;</span><span class="p">:</span> <span class="s2">&quot;b0d7f6cb-a429-49b2-b5f3-9637b409eebd::a81f47c6-a757-4e34-b644-3ccc62b4a01c::2&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>If the update is successful a <code>200</code> code will be returned.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../ECDR5-retrieving-an-ehrId/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Retrieving the patient's ehrId
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.4fa0e4ee.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.1d3bfcf1.min.js"></script>
+      
+    
+  </body>
+</html>
